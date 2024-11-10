@@ -86,7 +86,8 @@ def runGemini(terms_of_service: str, privacy_policy: str) -> str:
     """
 
     response = model.generate_content(prompt)
-
     response = response.text
-    
+    response_lines = response.splitlines()[1:-1]
+    response = "\n".join(response_lines)
+
     return response
