@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 
 import '@fontsource/roboto/300.css';
 import splashart from "./assets/splashart.png";
+import star from "./assets/star.svg";
 import "./popup.css";
 import DetailsComponent from "./DetailsComponent";
 
@@ -44,6 +45,21 @@ function IndexPopup() {
         <span className="sr-only">Loading...</span>
       </div>
     );
+  };
+
+  const spawnStars = (rating) => {
+    const stars = [];
+    for (let i = 1; i <= 5; i++) {
+      stars.push(
+        <img
+          key={i}
+          src={star}
+          alt={star}
+          className={`w-6 h-6 ${i <= rating ? 'filter-yellow' : 'filter-gray'}`}
+        />
+      );
+    }
+    return stars;
   };
 
   useEffect(() => {
@@ -106,11 +122,13 @@ function IndexPopup() {
 
         {!showDetails && (
           <>
-            <h2 className="text-lg text-center"> Detecting terms of service conditions...</h2>
+            <h2 className="text-lg text-center">
+              {isLoading ? "Detecting terms of service conditions..." : "Overall Rating"}</h2>
             {isLoading ? (
               spawnLoadingWheel()
             ) : (
               <div className="text-center mt-4">
+                <div className="flex justify-center space-x-2 mb-6">{spawnStars(rating)}</div>
                 <button onClick={handleDetailsClick} className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded shadow-lg">Details</button>
               </div>
             )}
@@ -120,9 +138,11 @@ function IndexPopup() {
         {showDetails && (
           <>
             <DetailsComponent jsonData={data}/>
-            <div className="text-center mt-4">
-              <button onClick={handleBackClick} className="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded shadow-md mt-4">Back</button>
-            </div>
+            {!isLoading && (
+              <div className="text-center mt-4">
+                <button onClick={handleBackClick} className="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded shadow-md mt-4">Back</button>
+              </div>
+            )}
           </>
         )}
       </div>
