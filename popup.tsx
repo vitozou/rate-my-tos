@@ -139,6 +139,7 @@ function IndexPopup() {
               <div className="text-center mt-4">
                 <button onClick={handleBackClick} className="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded shadow-md mt-4">Back</button>
               </div>
+            )}
           </>
         )}
       </div>
