@@ -21,11 +21,11 @@ def run_script(request):
     data = json.loads(request.body)
     # return JsonResponse({"url": data.get("url")}, status=200)
     currentURL = data.get("url")
-    tos_links = getTOSLinks("url")
-    combinedPolicy = "";
+    tos_links = getTOSLinks(currentURL)
+    combinedPolicy = ""
     
     for link in tos_links:
-        combinedPolicy += parsePageText(tos_links)
+        combinedPolicy += parsePageText(link)
         combinedPolicy += "\n"
     
     result = runGemini(combinedPolicy)

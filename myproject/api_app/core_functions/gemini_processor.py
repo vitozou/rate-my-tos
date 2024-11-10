@@ -1,3 +1,9 @@
+import google.generativeai as genai
+import json
+
+API_KEY = "AIzaSyDOCAb16USkc55L0StRMPY7AzWYSRAQm70" # API KEY HERE
+
+
 def runGemini(currentPolicy: str) -> str:
     """
     Performs analysis on the Terms of Service and Privacy Policy with Google's Gemini LLM.
@@ -12,10 +18,6 @@ def runGemini(currentPolicy: str) -> str:
         response : str
             A JSON-formatted string with grading and comments.
     """
-    API_KEY = "AIzaSyDOCAb16USkc55L0StRMPY7AzWYSRAQm70" # API KEY HERE
-
-    import google.generativeai as genai
-    import json
 
     genai.configure(api_key=API_KEY)
 

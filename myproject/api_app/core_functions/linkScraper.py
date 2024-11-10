@@ -7,46 +7,24 @@ import requests
 import time
 
 def getTOSLinks(url):
-    # Set up Chrome options for headless mode
-    options = webdriver.ChromeOptions()
-    options.add_argument('--headless')  # Enable headless mode
-    options.add_argument('--no-sandbox')  # Recommended for running in some environments like servers
-    options.add_argument('--disable-dev-shm-usage')  # Avoid some potential issues in headless mode
-    options.add_argument('--disable-gpu')  # Disable GPU acceleration for headless mode on Windows
+    response = requests.get(url)
+    if response.status_code == 200:
+        # Get the HTML content of the webpage
+        html_doc = response.text
 
-    # Initialize the WebDriver with options
-    driver = webdriver.Chrome(options=options)
-
-    try:
-        # Open the URL
-        driver.get(url)
-
-        WebDriverWait(driver, 3).until(
-            EC.presence_of_element_located((By.TAG_NAME, "a"))
-        )
-
-        html_doc = driver.page_source
-
+        # Parse the HTML with BeautifulSoup
         soup = BeautifulSoup(html_doc, 'html.parser')
 
-        keywords = ["tos", "terms", "privacy", "terms of service", "terms of use"]
+        # Find all <a> elements and store them in a list
+        a_tags = soup.find_all('a')
 
-        # search all <a> elements
-        links = []
-        for a in soup.find_all('a'):
-            href = a.get('href', '').lower()
-            text = a.get_text(strip=True).lower()
-            rel = ' '.join(a.get('rel', [])).lower()  # Convert rel list to a lowercase string
-            data_attrs = ' '.join([str(v).lower() for v in a.attrs.values() if isinstance(v, str)])
-
-            # if any keyword is in href, text, rel attribute, or other attributes
-            if any(keyword in href or keyword in text or keyword in rel or keyword in data_attrs for keyword in keywords):
-                links.append(a)
+        # Optionally, get only the href attribute of each <a> tag
+        links = [a.get('href') for a in a_tags if a.get('href') is not None]
 
         return links
-
-    finally:
-        driver.quit()
+    else:
+        print("Failed to retrieve the page. Status code:", response.status_code)
+        return []
         
 def parsePageText(url):
     response = requests.get(url)
