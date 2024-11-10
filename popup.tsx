@@ -72,13 +72,12 @@ function IndexPopup() {
             body: JSON.stringify({ url: currentURL }),
           });
 
-          const data = await response.json();
-          console.log(data);
+          const response_data = await response.json();
 
           if (response.ok) {
-            setData(data["response"]);
+            setData(response_data["result"]);
           } else {
-            console.error("Error:", data.error);
+            console.error("Error:", response_data.error);
           }
         } catch (error) {
           console.error("Error:", error);
@@ -88,6 +87,8 @@ function IndexPopup() {
 
     scrapeTOS();
   }, [currentURL]);
+
+  
 
   return (
     <>
