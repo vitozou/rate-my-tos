@@ -6,7 +6,9 @@ import "./popup.css";
 
 function IndexPopup() {
   const [data, setData] = useState("")
-
+  const result = fetch("http://127.0.0.1:8000/api/run-script/")
+  console.log(result)
+  
   return (
     <>
       <div
