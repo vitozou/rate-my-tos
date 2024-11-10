@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
 
 import '@fontsource/roboto/300.css';
-// import { FaStar } from "react-icons/fa"
 import splashart from "./assets/splashart.png";
+import star from "./assets/star.svg";
 import "./popup.css";
 import DetailsComponent from "./DetailsComponent";
 
@@ -51,9 +51,11 @@ function IndexPopup() {
     const stars = [];
     for (let i = 1; i <= 5; i++) {
       stars.push(
-        <FaStar
+        <img
           key={i}
-          className={`w-6 h-6 ${i <= rating ? 'text-yellow-400' : 'text-gray-300'}`}
+          src={star}
+          alt={star}
+          className={`w-6 h-6 ${i <= rating ? 'filter-yellow' : 'filter-gray'}`}
         />
       );
     }
@@ -117,11 +119,13 @@ function IndexPopup() {
 
         {!showDetails && (
           <>
-            <h2 className="text-lg text-center"> Detecting terms of service conditions...</h2>
+            <h2 className="text-lg text-center">
+              {isLoading ? "Detecting terms of service conditions..." : "Overall Rating"}</h2>
             {isLoading ? (
               spawnLoadingWheel()
             ) : (
               <div className="text-center mt-4">
+                <div className="flex justify-center space-x-2 mb-6">{spawnStars(rating)}</div>
                 <button onClick={handleDetailsClick} className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded shadow-lg">Details</button>
               </div>
             )}

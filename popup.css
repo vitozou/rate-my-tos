@@ -14,3 +14,11 @@ h2 {
   font-weight: 300;
   text-align: center;
 }
+
+.filter-yellow {
+  filter: brightness(0) saturate(100%) invert(73%) sepia(92%) saturate(343%) hue-rotate(356deg) brightness(105%) contrast(102%);
+}
+
+.filter-gray {
+  filter: grayscale(100%);
+}
