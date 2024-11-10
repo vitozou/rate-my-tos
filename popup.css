@@ -1,3 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 #popup {
   background-color: #bfffbc;
   border-radius: 12px;
