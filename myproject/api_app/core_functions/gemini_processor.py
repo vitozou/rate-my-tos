@@ -1,4 +1,4 @@
-def runGemini(terms_of_service: str, privacy_policy: str) -> str:
+def runGemini(currentPolicy: str) -> str:
     """
     Performs analysis on the Terms of Service and Privacy Policy with Google's Gemini LLM.
     
@@ -21,8 +21,7 @@ def runGemini(terms_of_service: str, privacy_policy: str) -> str:
 
     model = genai.GenerativeModel("gemini-1.5-flash")
 
-    TOS_text = terms_of_service
-    Privacy_text = privacy_policy
+    TOS_and_Privacy = currentPolicy
 
     json_structure = """
     {
@@ -77,8 +76,7 @@ def runGemini(terms_of_service: str, privacy_policy: str) -> str:
 
     Lastly, I want you to give an average score by averaging the scores across the categories as well as deducting based on any red flags. Then provide a short 2-3 sentence summary.
 
-    TOS: {TOS_text}
-    Privacy Policy: {Privacy_text}
+    TOS and Privacy Policy: {TOS_and_Privacy}
 
     I want you to output your answer in JSON with this format:
     "score" should be an integer from 1 to 5, "comment" should be 1 sentence, "Red_Flags" should be set to true or false, "Overall_score" should be an integer from 1 to 5, and "Summary" should be 2-3 sentences.

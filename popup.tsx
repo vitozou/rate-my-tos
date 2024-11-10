@@ -44,7 +44,7 @@ function IndexPopup() {
       </div>
     );
   };
-  
+
   useEffect(() => {
     chrome.tabs.query(
       {
@@ -62,7 +62,7 @@ function IndexPopup() {
 
   useEffect(() => {
     const scrapeTOS = async () => {
-      if(currentURL){
+      if (currentURL) {
         try {
           const response = await fetch(`${API_HOST}/run-script/`, {
             method: "POST",
@@ -71,7 +71,7 @@ function IndexPopup() {
             },
             body: JSON.stringify({ url: currentURL }),
           });
-    
+
           const data = await response.json();
           console.log(data);
 
@@ -87,7 +87,7 @@ function IndexPopup() {
     };
 
     scrapeTOS();
-  }, [currentURL]);  
+  }, [currentURL]);
 
   return (
     <>
