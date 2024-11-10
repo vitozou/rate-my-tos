@@ -13,7 +13,7 @@ function IndexPopup() {
   const [data, setData] = useState();
   const [showDetails, setShowDetails] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
-  const [rating, setRating] = useState(4); // TEMP VARIABLE
+  const [rating, setRating] = useState();
 
   const handleDetailsClick = () => {
     setShowDetails(true);
