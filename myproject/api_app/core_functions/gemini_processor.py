@@ -9,10 +9,8 @@ def runGemini(currentPolicy: str) -> str:
     Performs analysis on the Terms of Service and Privacy Policy with Google's Gemini LLM.
     
     Args:
-        terms_of_service : str
-            The text of the company's Terms of Service.
-        privacy : str
-            The text of the company's Privacy Policy.
+        currentPolicy : str
+            The text of the company's Terms of Service and Privacy Policy.
     
     Returns:
         response : str
@@ -52,11 +50,11 @@ def runGemini(currentPolicy: str) -> str:
             "comment": "___"
         }
         "Red_Flags: {
-            "accessing_unnecessary_user_data: _,
-            "claims_ownership_of_user_content: _,
-            "right_to_sell_user_data: _,
-            "agreement_without_informing_user: _,
-            "hidden_policy_amendments": _,
+            "Excessively_accesses_user_data": _,
+            "Claims_ownership_of_user_content": _,
+            "Right_to_sell_user_data": _,
+            "Important_agreements_are_not_explicitly_mentioned": _,
+            "Policy_changes_without_informing_user": _,
         }
         "Overall_score": _,
         "Summary": "___"
