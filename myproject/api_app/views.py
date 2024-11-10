@@ -1,6 +1,8 @@
 from django.shortcuts import render
 from django.views.decorators.csrf import csrf_exempt
 from .core_functions import runGemini
+from .core_functions import getTOSLinks
+from .core_functions import parsePageText
 
 # Create your views here.
 
@@ -17,6 +19,16 @@ def run_script(request):
     # output = runGemini(TOS, privacy_policy)
     # return JsonResponse(output)
     data = json.loads(request.body)
-    return JsonResponse({"url": data.get("url")}, status=200)
+    # return JsonResponse({"url": data.get("url")}, status=200)
+    currentURL = data.get("url")
+    tos_links = getTOSLinks("url")
+    combinedPolicy = "";
+    
+    for link in tos_links:
+        combinedPolicy += parsePageText(tos_links)
+        combinedPolicy += "\n"
+    
+    result = runGemini(combinedPolicy)
+    return JsonResponse({"result": result}, status=200)
 
 # Hu: called by api_app.views.py
