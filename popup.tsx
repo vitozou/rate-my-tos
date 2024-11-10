@@ -30,14 +30,11 @@ function IndexPopup() {
 
   return (
     <>
-      <div
-        id="popup"
-      >
-        <img
-          src={splashart}
-        />
+      <div id="popup">
+        <img src={splashart}/>
         <h2>
           Detecting terms of service conditions...
+          {data}
         </h2>
         {/* <input onChange={(e) => setData(e.target.value)} value={data} /> */}
       </div>

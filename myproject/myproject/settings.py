@@ -25,12 +25,16 @@ SECRET_KEY = "django-insecure-qh$ywyr59185pkhu_n(r)cd(tl!f3uj4qctz2m8g$-d)=4og94
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["127.0.0.1", "chrome-extension://ffgkfibcjdplfpahbdgdncfigffabogn"]
+# ALLOWED_HOSTS = []
+CORS_ALLOWED_ORIGINS = ["chrome-extension://ffgkfibcjdplfpahbdgdncfigffabogn"]
+CSRF_TRUSTED_ORIGINS = ["chrome-extension://ffgkfibcjdplfpahbdgdncfigffabogn", "http://127.0.0.1",]
 
 
 # Application definition
 
 INSTALLED_APPS = [
+    "corsheaders",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -41,6 +45,7 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    "corsheaders.middleware.CorsMiddleware",
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
