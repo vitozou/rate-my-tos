@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 import '@fontsource/roboto/300.css';
 import splashart from "./assets/splashart.png";
@@ -6,12 +6,12 @@ import "./popup.css";
 import DetailsComponent from "./DetailsComponent";
 
 function IndexPopup() {
+  const API_HOST = "http://127.0.0.1:8000/api";
+
+  const [currentURL, setCurrentURL] = useState("");
   const [data, setData] = useState("");
   const [showDetails, setShowDetails] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
-
-  //const result = fetch("http://127.0.0.1:8000/api/run-script/")
-  //console.log(result)
 
   const handleDetailsClick = () => {
     setShowDetails(true);
@@ -44,7 +44,50 @@ function IndexPopup() {
       </div>
     );
   };
+  
+  useEffect(() => {
+    chrome.tabs.query(
+      {
+        active: true,
+        currentWindow: true,
+      },
+      function (tabs) {
+        const tab = tabs[0];
+        if (tab.url) {
+          setCurrentURL(tab.url);
+        }
+      },
+    );
+  }, [chrome]);
 
+  useEffect(() => {
+    const scrapeTOS = async () => {
+      if(currentURL){
+        try {
+          const response = await fetch(`${API_HOST}/run-script/`, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ url: currentURL }),
+          });
+    
+          const data = await response.json();
+          console.log(data);
+
+          if (response.ok) {
+            setData(data["response"]);
+          } else {
+            console.error("Error:", data.error);
+          }
+        } catch (error) {
+          console.error("Error:", error);
+        }
+      }
+    };
+
+    scrapeTOS();
+  }, [currentURL]);  
 
   return (
     <>
@@ -70,7 +113,6 @@ function IndexPopup() {
             )}
           </>
         )}
-
       </div>
     </>
   );
