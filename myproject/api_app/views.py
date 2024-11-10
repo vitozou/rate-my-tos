@@ -15,11 +15,7 @@ import json
 @csrf_exempt
 @require_http_methods(["POST"])
 def run_script(request):
-    # Example script logic
-    # output = runGemini(TOS, privacy_policy)
-    # return JsonResponse(output)
     data = json.loads(request.body)
-    # return JsonResponse({"url": data.get("url")}, status=200)
     currentURL = data.get("url")
     tos_links = getTOSLinks(currentURL)
     combinedPolicy = ""

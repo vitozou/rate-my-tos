@@ -5,11 +5,29 @@ import splashart from "./assets/splashart.png";
 import "./popup.css";
 import DetailsComponent from "./DetailsComponent";
 
+const jsonData = {
+    "Transparency": { "score": 1, "comment": "The TOS and Privacy Policy are extremely vague and do not provide any meaningful information." },
+    "User_Data_Privacy": { "score": 1, "comment": "The company explicitly states they will not secure user privacy." },
+    "User_Rights_and_Ownership": { "score": 1, "comment": "The company does not mention any user rights or ownership." },
+    "Termination_Conditions": { "score": 1, "comment": "No information is provided about termination conditions." },
+    "Third_Party_Data_Sharing": { "score": 1, "comment": "There is no information about third party data sharing." },
+    "Data_Security_and_Protections": { "score": 1, "comment": "The company explicitly states they will not secure user privacy." },
+    "Red_Flags": {
+      "accessing_unnecessary_user_data": true,
+      "claims_ownership_of_user_content": true,
+      "right_to_sell_user_data": true,
+      "agreement_without_informing_user": true,
+      "hidden_policy_amendments": true
+    },
+    "Overall_score": 1,
+    "Summary": "This company has extremely concerning policies. They explicitly state their intention to sell user data and disregard privacy. These policies are alarmingly opaque and lack any mention of user rights or data security."
+  };
+
 function IndexPopup() {
   const API_HOST = "http://127.0.0.1:8000/api";
 
   const [currentURL, setCurrentURL] = useState("");
-  const [data, setData] = useState("");
+  const [data, setData] = useState();
   const [showDetails, setShowDetails] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -75,7 +93,7 @@ function IndexPopup() {
           const response_data = await response.json();
 
           if (response.ok) {
-            setData(response_data["result"]);
+            setData(JSON.parse(response_data["result"]));
           } else {
             console.error("Error:", response_data.error);
           }
@@ -88,7 +106,7 @@ function IndexPopup() {
     scrapeTOS();
   }, [currentURL]);
 
-  
+  console.log(data);
 
   return (
     <>
@@ -100,14 +118,13 @@ function IndexPopup() {
             <h2 className="text-lg"> Detecting terms of service conditions...</h2>
             <div className="text-center mt-4">
               <button onClick={handleDetailsClick} className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded shadow-lg">Details</button>
-              {/* <input onChange={(e) => setData(e.target.value)} value={data} /> */}
             </div>
           </>
         )}
 
         {showDetails && (
           <>
-            <DetailsComponent />
+            <DetailsComponent jsonData={data}/>
             {!isLoading && (
               <div className="text-center mt-4">
                 <button onClick={handleBackClick} className="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded shadow-md mt-4">Back</button>
