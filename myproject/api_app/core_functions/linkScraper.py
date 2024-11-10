@@ -21,13 +21,16 @@ def getTOSLinks(url):
         a_tags = soup.find_all('a')
 
         # Optionally, get only the href attribute of each <a> tag
-        links = [a.get('href') for a in a_tags if a.get('href') is not None and a.get('href')]
+        links = [a.get('href') for a in a_tags if a.get('href') is not None and a.get('href')[0] != '#']
 
         for i in range(len(links)):
-            if links[i][0] == '/':
+            if links[i].startswith('/'):
                 links[i] = url + links[i]
-            if links[i][:4] != 'http':
-                links[i] = "https://" + links[i]  
+            elif not links[i].startswith('http') and '/' in links[i]:
+                links[i] = url + '/' + links[i]
+            
+
+        print(links)
 
         return links
     else:
@@ -53,5 +56,5 @@ def parsePageText(url):
 # # for link in tos_links:
 # #     print(link.get('href'), "-", link.get_text(strip=True))
 
-text = getTOSLinks("https://facebook.com/r.php")
-print(text)
+# text = getTOSLinks("https://facebook.com/r.php")
+# print(text)
