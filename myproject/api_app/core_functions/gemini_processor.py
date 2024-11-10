@@ -1,7 +1,10 @@
 import google.generativeai as genai
 import json
+import os
+from dotenv import load_dotenv
+load_dotenv()
 
-API_KEY = "AIzaSyDOCAb16USkc55L0StRMPY7AzWYSRAQm70" # API KEY HERE
+API_KEY = os.getenv('PROJECT_API_KEY')
 
 
 def runGemini(currentPolicy: str) -> str:
