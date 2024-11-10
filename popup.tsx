@@ -73,9 +73,11 @@ function IndexPopup() {
         if (tab.url) {
           setCurrentURL(tab.url);
           setIsLoading(true);
+          setData(undefined);
         }
       },
     );
+
   }, [chrome]);
 
   useEffect(() => {
@@ -91,6 +93,7 @@ function IndexPopup() {
           });
 
           const response_data = await response.json();
+          console.log(response_data);
 
           if (response.ok) {
             setData(JSON.parse(response_data["result"]));

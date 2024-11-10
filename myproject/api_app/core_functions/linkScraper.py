@@ -15,11 +15,19 @@ def getTOSLinks(url):
         # Parse the HTML with BeautifulSoup
         soup = BeautifulSoup(html_doc, 'html.parser')
 
+        print(soup.prettify())
+
         # Find all <a> elements and store them in a list
         a_tags = soup.find_all('a')
 
         # Optionally, get only the href attribute of each <a> tag
-        links = [a.get('href') for a in a_tags if a.get('href') is not None]
+        links = [a.get('href') for a in a_tags if a.get('href') is not None and a.get('href')]
+
+        for i in range(len(links)):
+            if links[i][0] == '/':
+                links[i] = url + links[i]
+            if links[i][:4] != 'http':
+                links[i] = "https://" + links[i]  
 
         return links
     else:
@@ -35,7 +43,7 @@ def parsePageText(url):
         return page_text
     else:
         print("Failed to retrieve the page. Status code:", response.status_code)
-        return None
+        return ""
 
 # # someURL = "https://gitlab.com/-/users/terms"
 # someURL = "https://gmail.com/"
@@ -45,5 +53,5 @@ def parsePageText(url):
 # # for link in tos_links:
 # #     print(link.get('href'), "-", link.get_text(strip=True))
 
-# text = parsePageText(somePolicyURL)
-# print(text)
+text = getTOSLinks("https://facebook.com/r.php")
+print(text)
