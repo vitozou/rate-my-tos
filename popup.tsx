@@ -96,7 +96,9 @@ function IndexPopup() {
           console.log(response_data);
 
           if (response.ok) {
-            setData(JSON.parse(response_data["result"]));
+            const data_obj = JSON.parse(response_data["result"]);
+            setData(data_obj);
+            setRating(data_obj["Overall_score"]);
           } else {
             console.error("Error:", response_data.error);
           }
