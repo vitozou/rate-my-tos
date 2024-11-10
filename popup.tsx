@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 
 import '@fontsource/roboto/300.css';
+// import { FaStar } from "react-icons/fa"
 import splashart from "./assets/splashart.png";
 import "./popup.css";
 import DetailsComponent from "./DetailsComponent";
@@ -12,6 +13,7 @@ function IndexPopup() {
   const [data, setData] = useState("");
   const [showDetails, setShowDetails] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+  const [rating, setRating] = useState(4); // TEMP VARIABLE
 
   const handleDetailsClick = () => {
     setShowDetails(true);
@@ -23,10 +25,10 @@ function IndexPopup() {
 
   const spawnLoadingWheel = () => {
     return (
-      <div role="status">
+      <div className="flex justify-center mt-4 space-x-2" role="status">
         <svg
           aria-hidden="true"
-          className="w-16 h-16 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600"
+          className="w-12 h-12 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600"
           viewBox="0 0 100 101"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
@@ -45,6 +47,19 @@ function IndexPopup() {
     );
   };
 
+  const spawnStars = (rating) => {
+    const stars = [];
+    for (let i = 1; i <= 5; i++) {
+      stars.push(
+        <FaStar
+          key={i}
+          className={`w-6 h-6 ${i <= rating ? 'text-yellow-400' : 'text-gray-300'}`}
+        />
+      );
+    }
+    return stars;
+  };
+
   useEffect(() => {
     chrome.tabs.query(
       {
@@ -55,6 +70,7 @@ function IndexPopup() {
         const tab = tabs[0];
         if (tab.url) {
           setCurrentURL(tab.url);
+          setIsLoading(true);
         }
       },
     );
@@ -81,6 +97,8 @@ function IndexPopup() {
           }
         } catch (error) {
           console.error("Error:", error);
+        } finally {
+          setIsLoading(false)
         }
       }
     };
@@ -93,31 +111,30 @@ function IndexPopup() {
   return (
     <>
       <div id="popup" className="p-4">
-        <img src={splashart} />
+        <div className="flex justify-center mb-4">
+          <img src={splashart} />
+        </div>
 
         {!showDetails && (
           <>
-            <h2 className="text-lg"> Detecting terms of service conditions...</h2>
-            <div className="text-center mt-4">
-              <button onClick={handleDetailsClick} className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded shadow-lg">Details</button>
-              {/* <input onChange={(e) => setData(e.target.value)} value={data} /> */}
-            </div>
+            <h2 className="text-lg text-center"> Detecting terms of service conditions...</h2>
+            {isLoading ? (
+              spawnLoadingWheel()
+            ) : (
+              <div className="text-center mt-4">
+                <button onClick={handleDetailsClick} className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded shadow-lg">Details</button>
+                {/* <input onChange={(e) => setData(e.target.value)} value={data} /> */}
+              </div>
+            )}
           </>
         )}
 
         {showDetails && (
           <>
             <DetailsComponent />
-            {!isLoading && (
               <div className="text-center mt-4">
                 <button onClick={handleBackClick} className="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded shadow-md mt-4">Back</button>
               </div>
-            )}
-            {isLoading && (
-              <div className="flex justify-center mt-4">
-                {spawnLoadingWheel()}
-              </div>
-            )}
           </>
         )}
       </div>
