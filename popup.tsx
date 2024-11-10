@@ -122,7 +122,7 @@ function IndexPopup() {
           <img src={splashart} />
         </div>
 
-        {!showDetails && (
+        {(!showDetails || !data) && (
           <>
             <h2 className="text-lg text-center">
               {isLoading ? "Detecting terms of service conditions..." : "Overall Rating"}</h2>
@@ -137,7 +137,7 @@ function IndexPopup() {
           </>
         )}
 
-        {showDetails && (
+        {(showDetails && data) && (
           <>
             <DetailsComponent jsonData={data}/>
             {!isLoading && (

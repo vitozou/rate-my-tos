@@ -15,8 +15,6 @@ def getTOSLinks(url):
         # Parse the HTML with BeautifulSoup
         soup = BeautifulSoup(html_doc, 'html.parser')
 
-        print(soup.prettify())
-
         # Find all <a> elements and store them in a list
         a_tags = soup.find_all('a')
 

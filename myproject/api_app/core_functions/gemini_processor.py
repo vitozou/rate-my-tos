@@ -17,6 +17,8 @@ def runGemini(currentPolicy: str) -> str:
             A JSON-formatted string with grading and comments.
     """
 
+    print("Running Gemini \n\n")
+
     genai.configure(api_key=API_KEY)
 
     model = genai.GenerativeModel("gemini-1.5-flash")
