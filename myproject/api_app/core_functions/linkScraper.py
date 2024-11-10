@@ -59,14 +59,13 @@ def parsePageText(url):
         print("Failed to retrieve the page. Status code:", response.status_code)
         return None
 
+# # someURL = "https://gitlab.com/-/users/terms"
+# someURL = "https://gmail.com/"
+# somePolicyURL = "https://accounts.google.com/TOS?loc=US&hl=en-US&privacy=true"
 
-# someURL = "https://gitlab.com/-/users/terms"
-someURL = "https://gmail.com/"
-somePolicyURL = "https://accounts.google.com/TOS?loc=US&hl=en-US&privacy=true"
+# # tos_links = getTOSLinks(someURL)
+# # for link in tos_links:
+# #     print(link.get('href'), "-", link.get_text(strip=True))
 
-# tos_links = getTOSLinks(someURL)
-# for link in tos_links:
-#     print(link.get('href'), "-", link.get_text(strip=True))
-
-text = parsePageText(somePolicyURL)
-print(text)
+# text = parsePageText(somePolicyURL)
+# print(text)
