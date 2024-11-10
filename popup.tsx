@@ -96,7 +96,7 @@ function IndexPopup() {
 
         {!showDetails && (
           <>
-            <h2 className="text-lg font-bold mb-4"> Detecting terms of service conditions...</h2>
+            <h2 className="text-lg"> Detecting terms of service conditions...</h2>
             <button onClick={handleDetailsClick} className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded shadow-lg">Details</button>
             {/* <input onChange={(e) => setData(e.target.value)} value={data} /> */}
           </>
