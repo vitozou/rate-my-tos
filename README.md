@@ -1,3 +1,22 @@
+## Rate My TOS
+![Alt text](./rateMyTOS.png)
+
+This extension rates a website's privacy and terms of service policies for:
+- Transparency
+- User Data Privacy
+- User Rights and Ownership
+- Termination Conditions
+- Third Party Data Sharing
+- Data Security and Protections
+
+and lists Red Flags such as:
+- Excessively accessing user data
+- Claiming ownership of user content
+- Right to sell user data
+- Not explicitly menntioning important information
+- Changing policies without informing users
+
+
 This is a [Plasmo extension](https://docs.plasmo.com/) project bootstrapped with [`plasmo init`](https://www.npmjs.com/package/plasmo).
 
 ## Getting Started
